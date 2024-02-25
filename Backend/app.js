@@ -11,7 +11,7 @@ const DBurl = `mongodb+srv://${USER}:${PASSWORD}@cluster0.zmamtu8.mongodb.net/bo
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    console.log(req.headers);
+    // console.log(req.headers);
     res.status(200).send('Bookstore API!');
 });
 
@@ -25,7 +25,7 @@ async function testForError(func, res) {
 }
 
 app.route('/books')
-    .get(async (req, res) => {
+    .get((req, res) => {
         testForError(async () => {
             const books = await Book.find({});
             res.status(200).send({
@@ -34,7 +34,7 @@ app.route('/books')
             });
         }, res);
     })
-    .post(async (req, res) => {
+    .post((req, res) => {
         testForError(async () => {
             const { title, author, publishYear } = req.body;
             if (!title || !author || !publishYear) {
@@ -51,7 +51,7 @@ app.route('/books')
     });
 
 app.route('/books/:id')
-    .get(async (req, res) => {
+    .get((req, res) => {
         testForError(async () => {
             const { id } = req.params;
             const book = await Book.findById(id);
@@ -62,7 +62,7 @@ app.route('/books/:id')
             }
         }, res)
     })
-    .put(async (req, res) => {
+    .put((req, res) => {
         testForError(async () => {
             const { title, author, publishYear } = req.body;
             const { id } = req.params;
@@ -82,7 +82,7 @@ app.route('/books/:id')
             }
         }, res);
     })
-    .patch(async (req, res) => {
+    .patch((req, res) => {
         testForError(async () => {
             const { title, author, publishYear } = req.body;
             const { id } = req.params;
@@ -93,6 +93,17 @@ app.route('/books/:id')
                 ...req.body,
             };
             const result = await Book.findByIdAndUpdate(id, updateBookBook, { new: true });
+            if (result) {
+                res.status(200).send(result);
+            } else {
+                res.status(404).send({ message: `No book was found with the id: ${id}`});
+            }
+        }, res);
+    })
+    .delete((req, res) => {
+        testForError(async () => {
+            const { id } = req.params;
+            const result = await Book.findByIdAndDelete(id);
             if (result) {
                 res.status(200).send(result);
             } else {
