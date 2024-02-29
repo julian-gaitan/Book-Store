@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 import { PORT, USER, PASSWORD } from "./.config.js";
 
 import booksRoute from "./routes/bookRoute.js";
@@ -9,6 +10,15 @@ const DBurl = `mongodb+srv://${USER}:${PASSWORD}@cluster0.zmamtu8.mongodb.net/bo
 
 // For parsing raw json in the request body
 app.use(express.json());
+
+// For handling CORS Policy
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        allowedHeaders: ['Content-Type'],
+    })
+);
 
 app.get('/', (req, res) => {
     res.status(200).send('Bookstore API!');
