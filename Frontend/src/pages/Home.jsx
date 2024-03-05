@@ -11,9 +11,7 @@ const Home = () => {
   useEffect(() => {
     let ignore = false;
     fetch('http://localhost:5000/books/', { method: 'GET' })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((response) => {
         if (!ignore) {
           setBooks(response.books);
@@ -48,7 +46,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {books.length > 0 ? (
+          {books.length ? (
             books.map((book, index) => {
               return (
                 <tr key={book._id} className='h-8'>
