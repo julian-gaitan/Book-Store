@@ -30,7 +30,7 @@ const ReadBook = () => {
         <BackButton />
         <h1 className="text-3xl my-4">Show Book</h1>
         {Object.keys(book).length ? (
-          <div className="flex flex-col border-2 border-sky-300 rounded-xl w-fit p-4">
+          <BookContainer>
             <BookElement label={'Id'} value={book._id} />
             <BookElement label={'Title'} value={book.title} />
             <BookElement label={'Author'} value={book.author} />
@@ -43,7 +43,7 @@ const ReadBook = () => {
               label={'Last Update Time'}
               value={new Date(book.updatedAt).toString()}
             />
-          </div>
+          </BookContainer>
         ) : (
           <Spinner />
         )}
@@ -51,6 +51,14 @@ const ReadBook = () => {
     </div>
   );
 };
+
+const BookContainer = ({ children }) => {
+  return (
+    <div className="flex flex-col border-2 border-sky-300 rounded-xl w-fit p-4">
+      {children}
+    </div>
+  )
+}
 
 const BookElement = ({ label, value }) => {
   return (

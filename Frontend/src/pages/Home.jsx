@@ -30,9 +30,9 @@ const Home = () => {
   return (
     <div className="py-4 px-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl my-8">Books List</h1>
-        <Link to="/books/create">
-          <MdOutlineAddBox className="text-4xl text-sky-700" />
+        <h1 className="text-3xl my-8 ms-4">Books List</h1>
+        <Link to="/books/create" className='me-4'>
+          <MdOutlineAddBox className="text-5xl text-sky-700" />
         </Link>
       </div>
       <table className="w-full border-separate border-spacing-2">
@@ -71,7 +71,9 @@ const Home = () => {
               );
             })
           ) : (
-            <Spinner />
+            <tr>
+              <td><Spinner /></td>
+            </tr>
           )}
         </tbody>
       </table>
