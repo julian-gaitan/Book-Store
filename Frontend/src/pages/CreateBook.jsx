@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BookContainer, BookElement } from '../components/Book';
 import Spinner from '../components/Spinner';
 import BackButton from '../components/BackButton';
 
@@ -75,39 +76,13 @@ const CreateBook = () => {
           />
           {!isSending ? (
             <button type="submit" className="p-2 bg-sky-300 m-8">
-              Save
+              Create
             </button>
           ) : (
             <Spinner />
           )}
         </BookContainer>
       </form>
-    </div>
-  );
-};
-
-const BookContainer = ({ children }) => {
-  return (
-    <div className="flex flex-col border-2 border-sky-300 rounded-xl w-[600px] p-4 mx-auto">
-      {children}
-    </div>
-  );
-};
-
-const BookElement = ({ id, label, type = 'text', value, onChange }) => {
-  return (
-    <div>
-      <label className="text-xl me-4 text-gray-500" htmlFor={id}>
-        {label}
-      </label>
-      <input
-        className="border-2 border-gray-500 ps-4 py-2 w-full"
-        id={id}
-        type={type}
-        value={value}
-        onChange={onChange}
-        required
-      />
     </div>
   );
 };
