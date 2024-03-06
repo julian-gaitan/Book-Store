@@ -30,20 +30,20 @@ const ReadBook = () => {
         <BackButton />
         <h1 className="text-3xl my-4">Show Book</h1>
         {Object.keys(book).length ? (
-          <BookContainer>
-            <BookElement label={'Id'} value={book._id} />
-            <BookElement label={'Title'} value={book.title} />
-            <BookElement label={'Author'} value={book.author} />
-            <BookElement label={'Publish Year'} value={book.publishYear} />
-            <BookElement
+          <Container>
+            <Element label={'Id'} value={book._id} />
+            <Element label={'Title'} value={book.title} />
+            <Element label={'Author'} value={book.author} />
+            <Element label={'Publish Year'} value={book.publishYear} />
+            <Element
               label={'Create Time'}
               value={new Date(book.createdAt).toString()}
             />
-            <BookElement
+            <Element
               label={'Last Update Time'}
               value={new Date(book.updatedAt).toString()}
             />
-          </BookContainer>
+          </Container>
         ) : (
           <Spinner />
         )}
@@ -52,15 +52,15 @@ const ReadBook = () => {
   );
 };
 
-const BookContainer = ({ children }) => {
+const Container = ({ children }) => {
   return (
-    <div className="flex flex-col border-2 border-sky-300 rounded-xl w-fit p-4">
+    <div className="flex flex-col border-2 border-sky-300 rounded-xl w-fit p-4 mx-auto">
       {children}
     </div>
   )
 }
 
-const BookElement = ({ label, value }) => {
+const Element = ({ label, value }) => {
   return (
     <div className="my-4">
       <span className="text-xl mr-4 text-gray-500">{label}</span>

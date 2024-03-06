@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { BsInfoCircle } from 'react-icons/bs';
-import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
+import { MdOutlineAddBox } from 'react-icons/md';
+import BookTable from '../components/Book/BookTable';
+import BookCards from '../components/Book/BookCards';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
+  const [mode, setMode] = useState('Table');
 
   useEffect(() => {
     let ignore = false;
@@ -25,58 +26,29 @@ const Home = () => {
     };
   }, []);
 
-  const thClass = 'border border-slate-600 rounded-md';
-  const tdlass = 'border border-slate-700 rounded-md text-center';
   return (
     <div className="py-4 px-8">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl my-8 ms-4">Books List</h1>
-        <Link to="/books/create" className='me-4'>
+        <Link to="/books/create" className="me-4">
           <MdOutlineAddBox className="text-5xl text-sky-700" />
         </Link>
       </div>
-      <table className="w-full border-separate border-spacing-2">
-        <thead>
-          <tr>
-            <th className={thClass}>#</th>
-            <th className={thClass}>Title</th>
-            <th className={thClass + ' max-md:hidden'}>Author</th>
-            <th className={thClass + ' max-md:hidden'}>Publish Year</th>
-            <th className={thClass}>Operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          {books.length ? (
-            books.map((book, index) => {
-              return (
-                <tr key={book._id} className='h-8'>
-                  <td className={tdlass}>{index + 1}</td>
-                  <td className={tdlass}>{book.title}</td>
-                  <td className={tdlass + ' max-md:hidden'}>{book.author}</td>
-                  <td className={tdlass + ' max-md:hidden'}>{book.publishYear}</td>
-                  <td className={tdlass}>
-                    <div className="flex justify-center gap-x-4">
-                      <Link to={`/books/read/${book._id}`}>
-                        <BsInfoCircle className='text-2xl text-green-800' />
-                      </Link>
-                      <Link to={`/books/update/${book._id}`}>
-                        <AiOutlineEdit className='text-2xl text-yellow-600' />
-                      </Link>
-                      <Link to={`/books/delete/${book._id}`}>
-                        <MdOutlineDelete className='text-2xl text-red-600' />
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })
+      <button onClick={() => setMode('Table')}>Table</button>
+      <button onClick={() => setMode('Cards')}>Cards</button>
+      {books.length ? (
+        (mode === 'Table') ? (
+          <BookTable books={books} />
+        ) : (
+          (mode === 'Cards') ? (
+            <BookCards books={books} />
           ) : (
-            <tr>
-              <td><Spinner /></td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            null
+          )
+        )
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 };

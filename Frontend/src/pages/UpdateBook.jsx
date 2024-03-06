@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { BookContainer, BookElement } from '../components/Book';
+import BookContainer from '../components/Book/BookContainer';
+import BookElement from '../components/Book/BookElement';
 import Spinner from '../components/Spinner';
 import BackButton from '../components/BackButton';
 
