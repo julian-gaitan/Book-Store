@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
+import { useSnackbar } from 'notistack';
 
 const DeleteBook = () => {
   const [isSending, setIsSending] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   function handleDeleteBook() {
     setIsSending(true);
@@ -16,11 +18,12 @@ const DeleteBook = () => {
         if (response.error) {
           throw new Error(response.error);
         }
+        enqueueSnackbar('Book deleted successfully', { variant: 'warning' });
         navigate('/');
       })
       .catch((error) => {
-        alert(`Something went wrong:\n${error.message}`);
         console.log(error);
+        enqueueSnackbar(`Something went wrong:\n${error.message}`, { variant: 'error' });
       })
       .finally(() => setIsSending(false));
   }

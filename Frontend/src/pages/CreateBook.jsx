@@ -4,6 +4,7 @@ import BookContainer from '../components/Book/BookContainer';
 import BookElement from '../components/Book/BookElement';
 import Spinner from '../components/Spinner';
 import BackButton from '../components/BackButton';
+import { useSnackbar } from 'notistack';
 
 const CreateBook = () => {
   const [book, setBook] = useState({
@@ -13,6 +14,7 @@ const CreateBook = () => {
   });
   const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   function handleChange(e) {
     setBook({
@@ -36,11 +38,12 @@ const CreateBook = () => {
         if (response.error) {
           throw new Error(response.error);
         }
+        enqueueSnackbar('Book created successfully', { variant: 'success' });
         navigate('/');
       })
       .catch((error) => {
-        alert(`Something went wrong:\n${error.message}`);
         console.log(error);
+        enqueueSnackbar(`Something went wrong:\n${error.message}`, { variant: 'error' });
       })
       .finally(() => setIsSending(false));
   }
